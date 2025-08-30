@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "make -j",
+            "group": "build"
+        },
+        {
+            "label": "Test",
+            "type": "shell",
+            "command": "make test",
+            "group": "test"
+        },
+        {
+            "label": "Format Check",
+            "type": "shell",
+            "command": "make format-check"
+        }
+    ]
+}
