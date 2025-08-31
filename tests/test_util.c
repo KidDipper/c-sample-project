@@ -19,5 +19,5 @@ int main(void) {
   EXPECT_EQ_INT(3, (int)w);
   EXPECT_TRUE(strcmp(buf, "hel") == 0);
 
-  return RUN_TESTS();
+  RUN_TESTS();
 }
