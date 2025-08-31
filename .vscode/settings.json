@@ -2,7 +2,21 @@
   "C_Cpp.default.cStandard": "c11",
   "C_Cpp.errorSquiggles": "Enabled",
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": { "source.fixAll": true },
-  "files.associations": { "*.h": "c" },
-  "clang-format.style": "file"
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "files.associations": {
+    "*.h": "c"
+  },
+  "clang-format.style": "file",
+  // ▼ ここから追加 ▼
+  "terminal.integrated.profiles.windows": {
+    "MSYS2 MinGW64": {
+      "path": "C:\\msys64\\mingw64.exe",
+      "args": []
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "MSYS2 MinGW64",
+  "C_Cpp.default.compilerPath": "C:\\msys64\\mingw64\\bin\\gcc.exe"
+  // ▲ 追加ここまで ▲
 }
