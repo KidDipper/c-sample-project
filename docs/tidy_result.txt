@@ -1,0 +1,103 @@
+[1/4] Processing file D:/git/c-sample-project/src/format_check.c.
+1232 warnings generated.
+[2/4] Processing file D:/git/c-sample-project/src/main.c.
+2482 warnings generated.
+[3/4] Processing file D:/git/c-sample-project/src/static_check.c.
+4993 warnings generated.
+[4/4] Processing file D:/git/c-sample-project/src/util.c.
+5691 warnings generated.
+D:/git/c-sample-project/src/format_check.c:4:3: error: Address of stack memory associated with local variable 'result' returned to caller [clang-analyzer-core.StackAddressEscape,-warnings-as-errors]
+    4 |   return &result;
+      |   ^
+D:/git/c-sample-project/src/format_check.c:10:12: note: Calling 'add'
+   10 |   int* z = add(x, y);
+      |            ^~~~~~~~~
+D:/git/c-sample-project/src/format_check.c:4:3: note: Address of stack memory associated with local variable 'result' returned to caller
+    3 |   int result = a + b;
+      |   ~~~~~~~~~~~~~~~~~~
+    4 |   return &result;
+      |   ^      ~~~~~~~
+D:/git/c-sample-project/src/format_check.c:4:11: error: address of stack memory associated with local variable 'result' returned [clang-diagnostic-return-stack-address,-warnings-as-errors]
+    4 |   return &result;
+      |           ^~~~~~
+D:/git/c-sample-project/src/static_check.c:8:7: error: Although the value stored to 'x' is used in the enclosing expression, the value is never actually read from 'x' [clang-analyzer-deadcode.DeadStores,-warnings-as-errors]
+    8 |   if (x = 0) {  // bugprone-assignment-in-if を想定
+      |       ^   ~
+D:/git/c-sample-project/src/static_check.c:8:7: note: Although the value stored to 'x' is used in the enclosing expression, the value is never actually read from 'x'
+    8 |   if (x = 0) {  // bugprone-assignment-in-if を想定
+      |       ^   ~
+D:/git/c-sample-project/src/static_check.c:8:9: error: an assignment within an 'if' condition is bug-prone [bugprone-assignment-in-if-condition,-warnings-as-errors]
+    8 |   if (x = 0) {  // bugprone-assignment-in-if を想定
+      |       ~~^~~
+D:/git/c-sample-project/src/static_check.c:8:9: note: if it should be an assignment, move it out of the 'if' condition
+D:/git/c-sample-project/src/static_check.c:8:9: note: if it is meant to be an equality check, change '=' to '=='
+D:/git/c-sample-project/src/static_check.c:8:9: error: using the result of an assignment as a condition without parentheses [clang-diagnostic-parentheses,-warnings-as-errors]
+    8 |   if (x = 0) {  // bugprone-assignment-in-if を想定
+      |       ~~^~~
+D:/git/c-sample-project/src/static_check.c:8:9: note: place parentheses around the assignment to silence this warning
+    8 |   if (x = 0) {  // bugprone-assignment-in-if を想定
+      |         ^  
+      |       (    )
+D:/git/c-sample-project/src/static_check.c:8:9: note: use '==' to turn this assignment into an equality comparison
+    8 |   if (x = 0) {  // bugprone-assignment-in-if を想定
+      |         ^
+      |         ==
+D:/git/c-sample-project/src/static_check.c:20:10: error: Array access (from variable 'p') results in a null pointer dereference [clang-analyzer-core.NullDereference,-warnings-as-errors]
+   20 |   return p[0];  // clang-analyzer-core.NullDereference を想定
+      |          ^
+D:/git/c-sample-project/src/static_check.c:16:3: note: 'p' initialized to a null pointer value
+   16 |   char *p = NULL;
+      |   ^~~~~~~
+D:/git/c-sample-project/src/static_check.c:17:7: note: Assuming 'cond' is <= 10
+   17 |   if (cond > 10) {
+      |       ^~~~~~~~~
+D:/git/c-sample-project/src/static_check.c:17:3: note: Taking false branch
+   17 |   if (cond > 10) {
+      |   ^
+D:/git/c-sample-project/src/static_check.c:20:10: note: Array access (from variable 'p') results in a null pointer dereference
+   20 |   return p[0];  // clang-analyzer-core.NullDereference を想定
+      |          ^
+D:/git/c-sample-project/src/static_check.c:28:3: error: Call to function 'strcpy' is insecure as it does not provide bounding of the memory buffer. Replace unbounded copy functions with analogous functions that support length arguments such as 'strlcpy'. CWE-119 [clang-analyzer-security.insecureAPI.strcpy,-warnings-as-errors]
+   28 |   strcpy(m, "this string is definitely longer than 16 bytes");  // insecure API 使用
+      |   ^~~~~~
+D:/git/c-sample-project/src/static_check.c:28:3: note: Call to function 'strcpy' is insecure as it does not provide bounding of the memory buffer. Replace unbounded copy functions with analogous functions that support length arguments such as 'strlcpy'. CWE-119
+   28 |   strcpy(m, "this string is definitely longer than 16 bytes");  // insecure API 使用
+      |   ^~~~~~
+D:/git/c-sample-project/src/static_check.c:30:1: error: Potential leak of memory pointed to by 'm' [clang-analyzer-unix.Malloc,-warnings-as-errors]
+   30 | }
+      | ^
+D:/git/c-sample-project/src/static_check.c:25:21: note: Memory is allocated
+   25 |   char *m = (char *)malloc(16);
+      |                     ^~~~~~~~~~
+D:/git/c-sample-project/src/static_check.c:26:7: note: Assuming 'm' is non-null
+   26 |   if (!m)
+      |       ^~
+D:/git/c-sample-project/src/static_check.c:26:3: note: Taking false branch
+   26 |   if (!m)
+      |   ^
+D:/git/c-sample-project/src/static_check.c:30:1: note: Potential leak of memory pointed to by 'm'
+   30 | }
+      | ^
+D:/git/c-sample-project/src/static_check.c:35:3: error: Address of stack memory associated with local variable 'local' returned to caller [clang-analyzer-core.StackAddressEscape,-warnings-as-errors]
+   34 |   int local = 42;
+      |   ~~~~~~~~~~~~~~
+   35 |   return &local;  // clang-analyzer-core.StackAddressEscape を想定
+      |   ^      ~~~~~~
+D:/git/c-sample-project/src/static_check.c:35:3: note: Address of stack memory associated with local variable 'local' returned to caller
+   34 |   int local = 42;
+      |   ~~~~~~~~~~~~~~
+   35 |   return &local;  // clang-analyzer-core.StackAddressEscape を想定
+      |   ^      ~~~~~~
+D:/git/c-sample-project/src/static_check.c:35:11: error: address of stack memory associated with local variable 'local' returned [clang-diagnostic-return-stack-address,-warnings-as-errors]
+   35 |   return &local;  // clang-analyzer-core.StackAddressEscape を想定
+      |           ^~~~~
+D:/git/c-sample-project/src/util.c:23:3: error: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,-warnings-as-errors]
+   23 |   memcpy(dst, src, c);
+      |   ^~~~~~
+D:/git/c-sample-project/src/util.c:23:3: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   23 |   memcpy(dst, src, c);
+      |   ^~~~~~
+Suppressed 5680 warnings (5680 in non-user code).
+Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
+11 warnings treated as errors
+make: *** [Makefile:36: tidy] Error 1
