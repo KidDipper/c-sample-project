@@ -118,28 +118,3 @@ int f() {
 }
 ```
 
----
-
-## ✅ ベストプラクティス
-
-* **format は自動、tidy は PR 時に厳格**
-
-  * ローカル：保存時に `clang-format` 自動整形
-  * CI/PR：`clang-format -n --Werror` & `clang-tidy` 実行
-
-* **まずは解析系チェックから**
-
-  * `clang-analyzer-*`, `bugprone-*` を優先
-  * 誤検知が少なく導入しやすい
-
-* **命名規則は段階的に導入**
-
-  * 既存コードに一気に適用すると大量警告
-  * 新規コードや PR だけに適用して少しずつ浸透
-
-* **差分のみチェック（上級）**
-
-  ```bash
-  git diff --name-only origin/main... | grep -E '\.(c|h)$' | xargs clang-format -n --Werror
-  ```
-
