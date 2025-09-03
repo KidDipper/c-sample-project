@@ -8,7 +8,7 @@ OBJ := $(SRC:.c=.o)
 TESTS := tests/test_util
 TEST_OBJS := $(TESTS:=.o)
 
-.PHONY: all clean test format-check tidy
+.PHONY: all clean test format format-check tidy
 
 all: build
 
@@ -26,14 +26,13 @@ tests/%: tests/%.o libutil.a
 test: $(TESTS)
 	@set -e; for t in $(TESTS); do echo "RUN $$t"; ./$$t; done
 
+format:
+	@clang-format -i src/*.c src/*.h tests/*.c
+
 format-check:
-	@which clang-format >/dev/null 2>&1 || { echo "clang-format not found"; exit 1; }
-	@echo "Checking format..."
-	@diff -u <(cat src/*.c src/*.h tests/*.c) <(clang-format src/*.c src/*.h tests/*.c) >/dev/null || { \
-		echo "Formatting differs. Run clang-format -i src/*.c src/*.h tests/*.c"; exit 1; }
+	@clang-format -n --Werror src/*.c src/*.h tests/*.c
 
 tidy:
-	@which clang-tidy >/dev/null 2>&1 || { echo "clang-tidy not found (skipping)"; exit 0; }
 	@clang-tidy src/*.c -- -std=c11
 
 clean:
